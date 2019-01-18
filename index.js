@@ -13,6 +13,11 @@ function generateListItemString(item, index) {
   return `
         <li data-item-index="${index}">
             <span class="shopping-item ${item.checked ? 'shopping-item__checked' : '' }">${item.name}</span>
+            <form id="js-edit-item">
+            <button type="submit">edit</button>
+                <input type="text" name="edit-current-item" class="js-edit-item" placeholder="e.g., Apples">
+            </form>
+            <br>
             <div class="shopping-item-controls">
                 <button class="shopping-item-toggle">
                     <span class="button-label">check</span>
@@ -88,10 +93,8 @@ function hideFilter() {
 //function handling the hide/display of a checked items
 function handleHideCheckedItems() {
   $('.hide-checked-items').click(function(event) {
-    //if hide checkbox is checked, return true
     STORE.checkbox = !STORE.checkbox;
     const filteredItems = [...STORE.items];
-    //when hide checkbox returns true, filter all items that have a value of checked: true
     if(STORE.checkbox === true){
       hideFilter(filteredItems);
     }
@@ -112,16 +115,23 @@ function handleSearchForItems() {
     event.preventDefault();
     const searchList = $('.js-search-list').val();
     searchFilter(searchList);
-    renderShoppingList();
-    //console.log(searchList);
-    
+    renderShoppingList(); 
   });
 }
 
 
+//function to find the index of item we want to edit
+//we can use our function grabItemIndex from above
+
 //function handling the ability to edit an item name
 function handleEditItemName() {
-
+  $('#js-edit-item').submit(event => {
+    event.preventDefault();
+    const itemName = $('.js-edit-item').val();
+    const itemLoc = grabItemIndex(event.currentTarget);
+    STORE.items[itemLoc].name = itemName;
+    renderShoppingList();
+  });
 }
 
 
