@@ -3,7 +3,8 @@
 const STORE = { 
   items: [
     { name: 'Apple', checked: false },
-    { name: 'Banana', checked: true }
+    { name: 'Banana', checked: true },
+    { name: 'Orange', checked: false }
   ],
   checkbox: false
 };
@@ -94,21 +95,35 @@ function hideFilter() {
 function handleHideCheckedItems() {
   $('.hide-checked-items').click(function(event) {
     STORE.checkbox = !STORE.checkbox;
-    const filteredItems = [...STORE.items];
     if(STORE.checkbox === true){
-      hideFilter(filteredItems);
+      hideFilter();
     }
-    console.log(filteredItems);
     renderShoppingList();
   });
 }
 
+/*
+filter could be written this way with hide/show working if renderShoppingList
+wasnt a requirement for the class.
+
+function handleHideCheckedItems() {
+  $('.hide-checked-items').click(event => {
+    STORE.checkbox = !STORE.checkbox;
+    if(STORE.checkbox === true) {
+      $('.shopping-item__checked').hide();
+    } else {
+      $('.shopping-item__checked').show();
+    }
+  });
+}
+
+*/
 
 //filter for search terms
 function searchFilter(userInput){
   STORE.items = STORE.items.filter(item => item.name.includes(userInput));
 }
-
+// use if/else .hide() for search functionality 
 //function handling the display of all items matching a search term
 function handleSearchForItems() {
   $('#js-search-list-form').submit(event => {
