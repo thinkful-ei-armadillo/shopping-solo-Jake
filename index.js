@@ -122,14 +122,16 @@ function handleSearchForItems() {
 
 //function to find the index of item we want to edit
 //we can use our function grabItemIndex from above
-
+function changeNameTo(itemName){
+  const itemLoc = grabItemIndex(event.currentTarget);
+  STORE.items[itemLoc].name = itemName;
+}
 //function handling the ability to edit an item name
 function handleEditItemName() {
   $('#js-edit-item').submit(event => {
     event.preventDefault();
     const itemName = $('.js-edit-item').val();
-    const itemLoc = grabItemIndex(event.currentTarget);
-    STORE.items[itemLoc].name = itemName;
+    changeNameTo(itemName);
     renderShoppingList();
   });
 }
